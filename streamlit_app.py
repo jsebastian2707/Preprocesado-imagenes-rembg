@@ -18,7 +18,7 @@ def main():
         st.error("Por favor, introduce una ruta de carpeta válida.")
         return
     especies=getfolders(base_folder)
-    
+    data = []
     for  especie in especies:
         data.append({ "name": especie, "procesar": False})
     df = pd.DataFrame(data)

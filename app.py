@@ -67,6 +67,7 @@ def escale_images_in_folder(folder_path, output_size=(224, 224)):
     for filename in os.listdir(folder_path):
         if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
             file_path = os.path.join(folder_path, filename)
+            print(f"file=={file_path}")
             with Image.open(file_path) as img:
                 width, height = img.size
                 
