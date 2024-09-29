@@ -21,8 +21,9 @@ def main():
     data = []
     for  especie in especies:
         data.append({ "name": especie, "procesar": False})
-    df = pd.DataFrame(data)
-    edited_especies = st.data_editor(df,width =500,column_config={"name": st.column_config.TextColumn(label="🐦")},disabled=["name"])
+    if 'data_frame' not in st.session_state:
+        st.session_state.data_frame = pd.DataFrame(data)
+    edited_especies = st.data_editor(st.session_state.data_frame,width =500,column_config={"name": st.column_config.TextColumn(label="🐦")},disabled=["name"])
     favorite_command = edited_especies.loc[edited_especies['procesar']==True]["name"]
     
     folders = []
@@ -59,11 +60,8 @@ def main():
                 st.success("Fondo removido de las imágenes con éxito!")
     with col4:    
         if st.button("Seleccionar todo"):
-            data =[]
-            for  especie in especies:
-                data.append({ "name": especie, "procesar": True})
-            df = pd.DataFrame(data)
-            edited_especies = st.data_editor(df,width =500,column_config={"name": st.column_config.TextColumn(label="🐦")},disabled=["name"])
+            edited_especies['procesar'] = True
+            st.session_state["data_frame"] = edited_especies
             st.rerun()
 if __name__ == "__main__":
     main()
